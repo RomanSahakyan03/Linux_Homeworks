@@ -1,5 +1,5 @@
 all:
-	g++ main.cpp -o array-summary
+	g++ main.cpp -pthread -o array-summary
 
 clean:
 	rm array-summary
