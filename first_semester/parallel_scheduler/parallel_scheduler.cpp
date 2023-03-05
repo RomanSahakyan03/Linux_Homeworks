@@ -1,12 +1,16 @@
 #include "parallel_scheduler.h"
 
+void *working(void *arg){
+	
+}
+
 parallel_scheduler::parallel_scheduler(std::size_t n){
 
 	threads.resize(n);
 
 	for(auto &x: threads){
 
-		int result = pthread_create(x, NULL, run, jobs);
+		int result = pthread_create(&x, NULL, parallel_scheduler::working, nullptr);
 
         	if (result < 0){
             		exit(result);
@@ -29,4 +33,4 @@ parallel_scheduler::~parallel_scheduler(){
 
 }
 
-parallel_schedular::run()
+void parallel_scheduler::run(){}
