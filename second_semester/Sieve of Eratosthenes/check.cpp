@@ -5,7 +5,17 @@
 #include <unistd.h>
 #include <errno.h>
 
-int main(){
+int main(int argc, char **argv){
+    if(argc < 2){
+        std::cerr << "not enough arguments" << std::endl;
+        return 0;
+    }
+    int n = std::atoi(argv[1]);
+
+    if(n < 2 && n > 300){
+        std::cerr << "input valid number (from 2 to 300)" << std::endl;
+    }
+
     std::string pathname = "shm_file";
 	
 	// create a key for shared mem
@@ -27,27 +37,24 @@ int main(){
 		}
 	}
 
-    char *arr = (char *)shmat(shmid, NULL, 0);
-
-	if (arr == (char*)-1) {
+    // attachinh the segment
+    char *arr = (char *) shmat(shmid, nullptr, 0);
+    if (arr == (char *) -1) {
         perror("shmat");
         exit(1);
     }
 
-	// creating resheto
-    for (int i = 2; i <= 300; i++) {
-        if (arr[i-1] == 0) {
-            for (int j = i*i; j <= 300; j += i) {
-                arr[j-1] = 1;
-            }
-        }
+    if (arr[n-1] != 0){
+        std::cout << "Yes" << std::endl;
+    }else{
+        std::cout << "No" << std::endl;
     }
 
-	// unlink
+    // unlinking
     if (shmdt(arr) == -1) {
         perror("shmdt");
         exit(1);
     }
-    
+
     return 0;
 }

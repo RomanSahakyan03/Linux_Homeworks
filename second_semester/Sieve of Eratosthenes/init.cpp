@@ -33,7 +33,7 @@ int main() {
         arr[i] = 0;
     }
 
-	if(shmdt(shmid) == -1){
+	if(shmdt(arr) == -1){
 		perror("shmdt");
 		exit(errno);
 	}
