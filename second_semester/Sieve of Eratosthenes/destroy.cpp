@@ -15,8 +15,11 @@ int main() {
 		std::cout << "ERROR: Cannot generate a key!!\n";
 		exit(errno);
 	}
-	int shmid = shmget(key, 300 * sizeof(int), 0644);
-	shmctl(shmid, IPC_RMID, NULL);
+	int shmid = shmget(key, 0, 0);
+	int del = shmctl(shmid, IPC_RMID, NULL);
 
+	if(del < 0){
+		perror("shmctl");
+	}
 	return 0;
 }

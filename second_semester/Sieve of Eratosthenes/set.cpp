@@ -5,8 +5,8 @@
 #include <unistd.h>
 #include <errno.h>
 
-int main() {
-	std::string pathname = "shm_file";
+int main(){
+    std::string pathname = "shm_file";
 	
 	// create a key for shared mem
 	key_t key = ftok(pathname.c_str(), 'a');
@@ -27,16 +27,22 @@ int main() {
 		}
 	}
 
-    char *arr = (char *)shmat(shmid, NULL, 0);
+    char *arr = shmat(shmid, NULL, 0);
 
-    for(int i = 0; i < 300; ++i){
-        arr[i] = 0;
+	// creating resheto
+    for (int i = 2; i <= N; i++) {
+        if (arr[i-1] == 0) {
+            for (int j = i*i; j <= N; j += i) {
+                arr[j-1] = 1;
+            }
+        }
     }
 
-	if(shmdt(shmid) == -1){
-		perror("shmdt");
-		exit(errno);
-	}
-
+	// unlink
+    if (shmdt(arr) == -1) {
+        perror("shmdt");
+        exit(1);
+    }
+    
     return 0;
 }
