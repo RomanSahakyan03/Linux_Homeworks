@@ -25,16 +25,10 @@ int main(int argc, char **argv){
 		exit(errno);
 	}
 
-	// create shared mem segment
-	int shmid = shmget(key, 300 * sizeof(char), 0644 | IPC_CREAT | IPC_EXCL);
+	shmid = shmget(key, 0, 0644);
 	if(shmid < 0) {
-		if (errno != EEXIST) {
-			std::cout << "ERROR: Cannot create shared mem segment!!\n";	
-			exit(1);
-		}
-		else {
-			shmid = shmget(key, 300 * sizeof(char), 0644);
-		}
+        std::cout << "ERROR: Cannot open shared mem segment!!\n";	
+        exit(1);
 	}
 
     // attachinh the segment

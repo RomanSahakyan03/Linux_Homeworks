@@ -15,7 +15,13 @@ int main() {
 		std::cout << "ERROR: Cannot generate a key!!\n";
 		exit(errno);
 	}
-	int shmid = shmget(key, 0, 0);
+	int shmid = shmget(key, 0, 0644);
+	if(shmid < 0) {
+        std::cout << "ERROR: Cannot open shared mem segment!!\n";	
+        exit(1);
+	}
+
+	
 	int del = shmctl(shmid, IPC_RMID, NULL);
 
 	if(del < 0){
