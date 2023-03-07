@@ -25,7 +25,7 @@ int main(int argc, char **argv){
 		exit(errno);
 	}
 
-	shmid = shmget(key, 0, 0644);
+	int shmid = shmget(key, 0, 0644);
 	if(shmid < 0) {
         std::cout << "ERROR: Cannot open shared mem segment!!\n";	
         exit(1);
@@ -38,7 +38,7 @@ int main(int argc, char **argv){
         exit(1);
     }
 
-    if (arr[n-1] != 0){
+    if (arr[n] != 0){
         std::cout << "Yes" << std::endl;
     }else{
         std::cout << "No" << std::endl;

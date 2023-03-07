@@ -28,11 +28,11 @@ int main(){
         exit(1);
     }
 
-	// creating resheto
-    for (int i = 2; i <= 300; i++) {
-        if (arr[i-1] == 0) {
+	// creating sieve
+    for (int i = 2; i * i <= 300; ++i) {
+        if (arr[i] == 1) {
             for (int j = i*i; j <= 300; j += i) {
-                arr[j-1] = 1;
+                arr[j] = 0;
             }
         }
     }

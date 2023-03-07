@@ -16,21 +16,21 @@ int main() {
 	}
 
 	// create shared mem segment
-	int shmid = shmget(key, 300 * sizeof(char), 0644 | IPC_CREAT | IPC_EXCL);
+	int shmid = shmget(key, 301 * sizeof(char), 0644 | IPC_CREAT | IPC_EXCL);
 	if(shmid < 0) {
 		if (errno != EEXIST) {
 			std::cout << "ERROR: Cannot create shared mem segment!!\n";	
 			exit(1);
 		}
 		else {
-			shmid = shmget(key, 300 * sizeof(char), 0644);
+			shmid = shmget(key, 301 * sizeof(char), 0644);
 		}
 	}
 
     char *arr = (char *)shmat(shmid, NULL, 0);
 
-    for(int i = 0; i < 300; ++i){
-        arr[i] = 0;
+    for(int i = 0; i < 301; ++i){
+        arr[i] = 1;
     }
 
 	if(shmdt(arr) == -1){
